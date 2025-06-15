@@ -6,15 +6,15 @@ import json
 import numpy as np
 import crypten
 import crypten.communicator as comm
+from crypten.config import cfg
 import crypten.optim as crypten_optim
 import torch
-import torch.utils.data
-import torch.utils.data.distributed
 
 
 parent_dir = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..', '..'))
-encrypted_label = True
+encrypted_label = False
+cfg.communicator.verbose = True
 
 def run_benchmarks(
     epochs=20,
@@ -134,6 +134,8 @@ def run_benchmarks(
         val_losses.append(val_loss)
         val_accuracy.append(accuracy)
         crypten.print(f"Epoch {epoch + 1} --- Training loss: {loss}, epoch time: {epoch_time}, val loss: {val_loss}, val accuracy: {accuracy}")
+
+    crypten.print_communication_stats()
 
     if rank == 0:
         history = {
