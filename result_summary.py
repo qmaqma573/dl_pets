@@ -118,6 +118,7 @@ def plot_accuracy_curves(results, save_path='accuracy_comparison.png', title="Va
     """
     Plot accuracy curves for all models
     """
+    plt.rcParams["font.size"] = 18
     plt.figure(figsize=(12, 8))
 
     for model_name, (epochs, accuracies) in results.items():
@@ -136,7 +137,6 @@ def plot_accuracy_curves(results, save_path='accuracy_comparison.png', title="Va
 
     plt.tight_layout()
     plt.savefig(save_path)
-    plt.show()
 
     print(f"Plot saved to {save_path}")
 
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     }
 
     # Plot accuracy curves
-    # plot_accuracy_curves(accuracy_results, "accuracy_HE.png", "Validation Accuracy Comparison (HE)")
+    plot_accuracy_curves(accuracy_results, "accuracy_HE.png", "Validation Accuracy Comparison (HE)")
 
     print("\n===== Batch Time Summary (HE) =====")
     print("Model               | Average (s) | Total (s)")
@@ -249,11 +249,11 @@ if __name__ == "__main__":
     plaintext_results_comp  = {
         'MPC Baseline (CE)': (ce_plain_epochs, ce_plain_accuracies),
         'MPC Baseline (MSE)': (mse_plain_epochs, mse_plain_accuracies),
-        'HE Baseline (CE)': accuracy_results['CE (Plaintext)'],
-        'HE Baseline (MSE)': accuracy_results['MSE (Plaintext)']
+        'HE Baseline (CE)': accuracy_results['Plaintext (CE)'],
+        'HE Baseline (MSE)': accuracy_results['Plaintext (MSE)']
     }
 
-    # plot_accuracy_curves(plaintext_results_comp, 'baseline_comp.png')
+    plot_accuracy_curves(plaintext_results_comp, 'baseline_comp.png')
     mpc_he_comp = {
         'MPC (MSE)': (mse_plainlabel_epochs, mse_plainlabel_accuracies),
         'MPC (CE)': (ce_plainlabel_epochs, ce_plainlabel_accuracies),
