@@ -8,5 +8,5 @@ model_path = os.path.join(os.path.dirname(current_dir), "data", "models")
 
 learning_rate = 0.001
 weight_decay = 1e-5
-epoches = 50
+epoches = 20
 batch_size = 64

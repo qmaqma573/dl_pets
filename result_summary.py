@@ -118,13 +118,26 @@ def plot_accuracy_curves(results, save_path='accuracy_comparison.png', title="Va
     """
     Plot accuracy curves for all models
     """
+    markers      = ['o',  'X',   's',   '^']
+    marker_sizes = [7,    12,    7,     10]
+    linestyles   = ['-',  '--',  '-.',  ':']
+    linewidths   = [2.0,  2.0,   2.0,   2.0]
+
     plt.rcParams["font.size"] = 18
     plt.figure(figsize=(12, 8))
 
-    for model_name, (epochs, accuracies) in results.items():
+    for i, (model_name, (epochs, accuracies)) in enumerate(results.items()):
         if epochs and accuracies:
-            plt.plot(epochs, accuracies, marker='o',
-                     linestyle='-', label=model_name)
+            idx = i % len(markers)
+            plt.plot(
+                epochs, accuracies,
+                marker=markers[idx],
+                markersize=marker_sizes[idx],
+                linestyle=linestyles[idx],
+                linewidth=linewidths[idx],
+                label=model_name,
+                zorder=len(results) - i,
+            )
 
     plt.xlabel('Epoch')
     plt.ylabel('Validation Accuracy')
@@ -210,7 +223,7 @@ if __name__ == "__main__":
         'Plaintext (MSE)': (mse_plain_epochs, mse_plain_accuracies)
     }
 
-    # plot_accuracy_curves(mpc_plaintext_result, "accuracy_mpc.png", "Validation Accuracy Comparison (MPC)")
+    plot_accuracy_curves(mpc_plaintext_result, "accuracy_mpc.png", "Validation Accuracy Comparison (MPC)")
 
     # MPC fully encrypted vs. plaintext label
     plainlabel_ce_mpc = os.path.join(base_dir, 'mpc', 'mpc_plainlabel_ce.json')

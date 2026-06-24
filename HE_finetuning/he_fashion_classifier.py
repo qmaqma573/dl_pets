@@ -29,15 +29,10 @@ class HEFashionClassifier(ABC):
 
     def _create_context(self):
         """Create a TenSEAL context with appropriate parameters for our task."""
-        # # Higher gives more precision but slower
-        # poly_mod_degree = 16384
-        # # More levels for deeper computation
-        # coeff_mod_bit_sizes = [60, 40, 40, 40, 60]
+        # Higher gives more precision but slower
         poly_mod_degree = 8192
-        # poly_mod_degree = 4096
-        # More levels for deeper computation
-        coeff_mod_bit_sizes = [50, 40, 40, 50]
-        # coeff_mod_bit_sizes = [40, 30, 30, 40]
+        # levels for deeper computation
+        coeff_mod_bit_sizes = [50, 40, 50]
 
         context = ts.context(
             ts.SCHEME_TYPE.CKKS,
